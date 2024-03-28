@@ -1,27 +1,18 @@
+from flask import Flask,request
 from trans_model import generation_function
-items ="macaroni, butter, salt, bacon, milk, flour, pepper, cream corn"
+app = Flask(__name__)
+#python -m flask --app main run --debug --host 0.0.0.0
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
 
-generated = generation_function(items)
+#post route    
+@app.route("/recommend",methods=['POST'])
+def test():
+    content=request.json
+    data=content['ingredients']
+    generated = generation_function(data)
+    return generated
 
-for text in generated:
-    sections = text.split("\n")
-    for section in sections:
-        section = section.strip()
-        if section.startswith("title:"):
-            section = section.replace("title:", "")
-            headline = "TITLE"
-        elif section.startswith("ingredients:"):
-            section = section.replace("ingredients:", "")
-            headline = "INGREDIENTS"
-        elif section.startswith("directions:"):
-            section = section.replace("directions:", "")
-            headline = "DIRECTIONS"
-        
-        if headline == "TITLE":
-            print(f"[{headline}]: {section.strip().capitalize()}")
-        else:
-            section_info = [f"  - {i+1}: {info.strip().capitalize()}" for i, info in enumerate(section.split("--"))]
-            print(f"[{headline}]:")
-            print("\n".join(section_info))
-
-    print("-" * 130)
+if __name__=='__main__':
+    app.run(host="0.0.0.0",port=5000)
