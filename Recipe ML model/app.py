@@ -1,6 +1,13 @@
 from flask import Flask,request
+import os
 from trans_model import generation_function
+from flask_cors import CORS
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
+CORS(app)
+# Configure FLASK_DEBUG from environment variable
+app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 #python -m flask --app main run --debug --host 0.0.0.0
 @app.route("/")
 def hello_world():
@@ -15,4 +22,4 @@ def test():
     return generated
 
 if __name__=='__main__':
-    app.run(host="0.0.0.0",port=5000)
+    app.run()

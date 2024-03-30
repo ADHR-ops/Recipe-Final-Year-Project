@@ -41,7 +41,7 @@ const RecipesRecommendation = ({ navigation }) => {
         setLoading(true)
         setRecommendedRecipes([])
         try {
-            const res = await axios.post(`http://192.168.1.105:5000/recommend`, {
+            const res = await axios.post(`https://adde-wyx5dxzbla-de.a.run.app/recommend`, {
                 ingredients: ingredients
             });
             setRecommendedRecipes(res.data)
@@ -81,7 +81,7 @@ const RecipesRecommendation = ({ navigation }) => {
                 <FlatList
                     data={recommendedRecipes}
                     renderItem={({ item }) => {
-                        return <Text style={{ color: 'white' }}>{item}</Text>
+                        return <Text style={{ color: Colors.accentColor }}>{item}</Text>
                     }}
                 />
             </View>

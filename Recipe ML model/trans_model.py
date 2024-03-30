@@ -75,4 +75,3 @@ def generation_function(texts):
         special_tokens
     )
     return generated_recipe
-generation_function(['onion'])
